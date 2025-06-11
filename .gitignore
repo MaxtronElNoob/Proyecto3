@@ -1,0 +1,54 @@
+# .NET MAUI
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+*.db
+*.apk
+*.apks
+*.aab
+*.app
+*.xcarchive
+*.ipa
+*.pdb
+*.mdb
+*.cache
+*.log
+*.tlog
+*.ide
+*.DS_Store
+*.swp
+*.tmp
+*.bak
+*.ncrunch*
+*.localhistory/
+*.vsconfig
+
+# Mac build artifacts
+*.xcuserstate
+*.xcworkspace/
+*.xcodeproj/
+*.xcuserdata/
+
+# Rider
+.idea/
+
+# Visual Studio for Mac
+.vscode/
+.vs/
+*.pidb
+*.userprefs
+
+# MAUI specific
+Platforms/Android/obj/
+Platforms/Android/bin/
+Platforms/iOS/obj/
+Platforms/iOS/bin/
+Platforms/MacCatalyst/obj/
+Platforms/MacCatalyst/bin/
+Platforms/Windows/obj/
+Platforms/Windows/bin/
