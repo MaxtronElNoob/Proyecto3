@@ -9,4 +9,4 @@ Correr los comandos en la carpeta del proyecto:
 
 `dotnet workload restore`
 
-`dotnet maui run -f:net8.0-android`
+`dotnet build -f net8.0-android -t:Run`
