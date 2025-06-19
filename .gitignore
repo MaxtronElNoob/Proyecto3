@@ -7,7 +7,6 @@ obj/
 *.sln.docstates
 *.vs/
 .vscode/
-*.db
 *.apk
 *.apks
 *.aab
