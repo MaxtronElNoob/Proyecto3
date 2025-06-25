@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto3_pago.AddTransaction">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+            <Label Text="Glosa"/>
+            <Entry Text="{Binding BillTotalText}" FontSize="16" Keyboard="Text" TextColor="White" />
+
+            <Label Text="Monto"/>
+            <Entry Text="{Binding BillTotalText}" FontSize="16" Keyboard="Numeric" TextColor="White" />
+
+            <Label Text="Fecha"/>
+            <DatePicker Date="{Binding SelectedDate}" FontSize="16" Format="d"/>
+
+            <CheckBox />
+            <Label Text="¿Es ingreso?"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
