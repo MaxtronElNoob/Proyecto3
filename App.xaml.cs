@@ -1,4 +1,7 @@
-﻿namespace Proyecto3_pago;
+﻿using Proyecto3_pago.ViewModels; // Add this line or the correct namespace for TransactionViewModel
+using Proyecto3_pago.DataBases; // Add this line or replace with the correct namespace for TransactionDatabase
+
+namespace Proyecto3_pago;
 
 public partial class App : Application
 {
@@ -6,6 +9,8 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell(new MainPage());
+		var database = new TransactionDatabase(); // Create an instance of TransactionDatabase
+		var viewModel = new TransactionViewModel(database); // Pass the database to the ViewModel
+		MainPage = new AppShell(new MainPage(viewModel));
 	}
 }

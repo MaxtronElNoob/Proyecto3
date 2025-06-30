@@ -1,13 +1,13 @@
-﻿using Proyecto3_pago.Models;
+﻿using Proyecto3_pago.ViewModels;
 
 namespace Proyecto3_pago;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
-	{
-		InitializeComponent();
-		BindingContext = new Transaccion();
-	}
+    public MainPage(TransactionViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
 }
 
