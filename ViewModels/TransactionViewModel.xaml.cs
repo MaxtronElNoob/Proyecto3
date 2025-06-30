@@ -1,87 +1,55 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.ComponentModel;
+using Proyecto3_pago.Models;
 
-namespace MauiApp2_Tips;
+namespace Proyecto3_pago.ViewModels;
 
 public partial class TransactionViewModel : ObservableObject
 {
 	[ObservableProperty]
-	private List<Transaccion>? listaTransacciones;
+	private List<Transaccion> listaTransacciones;
 
-	public double Ingresos => ListaTransacciones?.Sum(t => t.Tipo == TipoTransaccion.Ingreso ? t.Monto : 0) ?? 0;
-	public double Egresos => ListaTransacciones?.Sum(t => t.Tipo == TipoTransaccion.Retiro ? t.Monto : 0) ?? 0;
-	public double Balance => Ingresos - Egresos;
-	public string Nombre;
-	public string Apellido;
+	public Transaccion new_transaction;
 
+	private Usuario usuario;
 
-	private
-	
+	public double Balance => usuario.Ingresos - usuario.Egresos;
 
-	// public int tipAmount => (int)Math.Round(subtotal * Bill.TipPercent);
-	// public int perPersonAmount => subtotal + tipAmount;
-	// public string TipPercentText => $"{Math.Round(Bill.TipPercent * 100)}%";
+	public TransactionViewModel()
+	{
+		usuario = new Usuario { Nombre = "Juan", Apellido = "Perez", Ingresos = 0, Egresos = 0 };
+		listaTransacciones = new List<Transaccion>();
+		new_transaction = new Transaccion();
+	}
 
-	// public string BillTotalText
-	// {
-	// 	get => Bill.BillTotal.ToString();
-	// 	set
-	// 	{
-	// 		if (int.TryParse(value, out var result))
-	// 		{
-	// 			Bill.BillTotal = result;
-	// 			OnPropertyChanged(nameof(subtotal));
-	// 			OnPropertyChanged(nameof(tipAmount));
-	// 			OnPropertyChanged(nameof(perPersonAmount));
-	// 		}
-	// 	}
-	// }
+	[RelayCommand]
+	private async Task UploadTransaction()
+	{
+		ListaTransacciones.Add(new_transaction);
 
-	// private void OnBillChanged(object sender, PropertyChangedEventArgs e)
-	// {
-	// 	Console.WriteLine("Actualizando Valores...");
-	// 	OnPropertyChanged(nameof(subtotal));
-	// 	OnPropertyChanged(nameof(tipAmount));
-	// 	OnPropertyChanged(nameof(perPersonAmount));
-	// 	OnPropertyChanged(nameof(TipPercentText));
-	// }
+		if (new_transaction.es_ingreso)
+		{
+			usuario.Ingresos += new_transaction.Monto;
+		}
+		else
+		{
+			usuario.Egresos += new_transaction.Monto;
+		}
 
-	// public BillViewModel()
-	// {
-	// 	Bill = new RestaurantBill { BillTotal = 0, TipPercent = 0.0, NPeople = 1 };
-	// 	Bill.PropertyChanged += OnBillChanged;
-	// }
+		//Aqui deberia haber un async para subirlo a la base de datos el new_transaction
 
-	// [RelayCommand]
-	// private void UpdateTip(string? Button_porcentage)
-	// {
-	// 	Bill.TipPercent = float.Parse(Button_porcentage ?? "0");
-	// }
+		//Reset de new_transaction
+		new_transaction.es_ingreso = false;
+		new_transaction.Fecha = DateTime.Today;
+		new_transaction.Glosa = "";
+		new_transaction.Monto = 0;
 
-	// [RelayCommand]
-	// public void updateTotal(int? Label_total)
-	// {
-	// 	Bill.BillTotal = Label_total ?? 0;
+		await Shell.Current.GoToAsync(nameof(MainPage));
+	}
 
-	// }
-	// [RelayCommand]
-	// public void updateNPeople(int? Label_people)
-	// {
-	// 	Bill.NPeople = Label_people ?? 1;
-	// }
-	// [RelayCommand]
-	// public void incrementNPeople()
-	// {
-	// 	Bill.NPeople++;
-	// }
-	// [RelayCommand]
-	// public void decrementNPeople()
-	// {
-	// 	if (Bill.NPeople > 1)
-	// 	{
-	// 		Bill.NPeople--;
-	// 	}
-	// }
-
+	[RelayCommand]
+	private async Task GoToAddTransaction()
+	{
+		await Shell.Current.GoToAsync(nameof(AddTransaction));
+	}
 }

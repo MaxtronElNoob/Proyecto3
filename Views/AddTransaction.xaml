@@ -6,15 +6,15 @@
     <ScrollView>
         <VerticalStackLayout Padding="30,0" Spacing="25">
             <Label Text="Glosa"/>
-            <Entry Text="{Binding BillTotalText}" FontSize="16" Keyboard="Text" TextColor="White" />
+            <Entry Text="{Binding Transaccion.Glosa}" FontSize="16" Keyboard="Text" TextColor="White" />
 
-            <Label Text="Monto"/>
-            <Entry Text="{Binding BillTotalText}" FontSize="16" Keyboard="Numeric" TextColor="White" />
+            <Label Text="Cantidad"/>
+            <Entry Text="{Binding Transaccion.Monto}" FontSize="16" Keyboard="Numeric" TextColor="White" />
 
             <Label Text="Fecha"/>
-            <DatePicker Date="{Binding SelectedDate}" FontSize="16" Format="d"/>
+            <DatePicker Date="{Binding Transaccion.Fecha}" FontSize="16" Format="d"/>
 
-            <CheckBox />
+            <CheckBox/>
             <Label Text="¿Es ingreso?"/>
         </VerticalStackLayout>
     </ScrollView>
