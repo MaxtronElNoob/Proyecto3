@@ -1,10 +1,9 @@
-public enum TipoTransaccion { Ingreso, Retiro }
+namespace Proyecto3_pago.Models;
 
 public class Transaccion
 {
-    public int Id { get; set; }
-    public TipoTransaccion Tipo { get; set; }
+    public bool es_ingreso { get; set; }
     public double Monto { get; set; }
-    public string? Descripcion { get; set; }
+    public string? Glosa { get; set; }
     public DateTime Fecha { get; set; }
 }
