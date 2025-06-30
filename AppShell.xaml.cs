@@ -2,10 +2,9 @@
 
 public partial class AppShell : Shell
 {
-	public AppShell(MainPage mainPage)
+	public AppShell()
 	{
 		InitializeComponent();
-		Items.Add(new ShellContent { Content = mainPage });
 		Routing.RegisterRoute(nameof(AddTransaction), typeof(AddTransaction));
 	}
 }

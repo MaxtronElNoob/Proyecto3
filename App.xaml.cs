@@ -5,12 +5,9 @@ namespace Proyecto3_pago;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-
-		var database = new TransactionDatabase(); // Create an instance of TransactionDatabase
-		var viewModel = new TransactionViewModel(database); // Pass the database to the ViewModel
-		MainPage = new AppShell(new MainPage(viewModel));
-	}
+    public App()
+    {
+        InitializeComponent();
+        MainPage = new AppShell();
+    }
 }
