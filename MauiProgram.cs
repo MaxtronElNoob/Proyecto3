@@ -20,7 +20,7 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-        builder.Services.AddSingleton<TransactionViewModel>();
+        builder.Services.AddSingleton<TransaccionesViewModel>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<AddTransaction>();
         builder.Services.AddSingleton<TransactionDatabase>();

@@ -4,7 +4,7 @@ namespace Proyecto3_pago;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage(TransactionViewModel viewModel)
+    public MainPage(TransaccionesViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

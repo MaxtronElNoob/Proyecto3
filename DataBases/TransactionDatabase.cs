@@ -98,8 +98,13 @@ public class TransactionDatabase
                 .FirstOrDefaultAsync();
             if (user != null)
             {
-                if (transaction.IsEarning) user.Earnings += transaction.Amount;
-                else user.Spending += transaction.Amount;
+                if (transaction.IsEarning)
+                {
+                    user.Earnings += transaction.Amount;
+                }
+                else {
+                    user.Spending += transaction.Amount;
+                }
                 var amountUpdateResult = await database.UpdateAsync(user);
                 return amountUpdateResult;
             }
