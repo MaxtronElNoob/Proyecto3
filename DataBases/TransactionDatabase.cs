@@ -6,7 +6,7 @@ namespace Proyecto3_pago.DataBases;
 
 public class TransactionDatabase
 {
-    SQLiteAsyncConnection database;
+    private SQLiteAsyncConnection? database;
 
     async Task Init()
     {
@@ -21,13 +21,13 @@ public class TransactionDatabase
     public async Task<List<User>> GetUsersAsync()
     {
         await Init();
-        return await database.Table<User>().ToListAsync();
+        return await database!.Table<User>().ToListAsync();
     }
 
     public async Task<User> GetUserAsync(int id)
     {
         await Init();
-        return await database.Table<User>().Where(i => i.ID == id).FirstOrDefaultAsync();
+        return await database!.Table<User>().Where(i => i.ID == id).FirstOrDefaultAsync();
     }
 
     public async Task<int> SaveUserAsync(User user)
@@ -35,43 +35,43 @@ public class TransactionDatabase
         await Init();
         if (user.ID != 0)
         {
-            return await database.UpdateAsync(user);
+            return await database!.UpdateAsync(user);
         }
         else
         {
-            return await database.InsertAsync(user);
+            return await database!.InsertAsync(user);
         }
     }
 
     public async Task<int> DeleteUserAsync(User user)
     {
         await Init();
-        return await database.DeleteAsync(user);
+        return await database!.DeleteAsync(user);
     }
 
     public async Task<List<Transaction>> GetTransactionsAsync()
     {
         await Init();
-        return await database.Table<Transaction>().ToListAsync();
+        return await database!.Table<Transaction>().ToListAsync();
     }
 
     public async Task<Transaction> GetTransactionAsync(int id)
     {
         await Init();
-        return await database.Table<Transaction>().Where(i => i.ID == id).FirstOrDefaultAsync();
+        return await database!.Table<Transaction>().Where(i => i.ID == id).FirstOrDefaultAsync();
     }
 
     public async Task<List<Transaction>> GetTransactionsByUserAsync(int userId)
     {
         await Init();
-        return await database.Table<Transaction>().Where(i => i.UserId == userId).ToListAsync();
+        return await database!.Table<Transaction>().Where(i => i.UserId == userId).ToListAsync();
     }
     public async Task<int> SaveTransactionAsync(Transaction transaction)
     {
         await Init();
         if (transaction.ID != 0)
         {
-            var result = await database.UpdateAsync(transaction);
+            var result = await database!.UpdateAsync(transaction);
             if (result == 0) return result;
 
             var user = await database
@@ -89,7 +89,7 @@ public class TransactionDatabase
         }
         else
         {
-            var result = await database.InsertAsync(transaction);
+            var result = await database!.InsertAsync(transaction);
             if (result == 0) return result;
 
             var user = await database
@@ -110,6 +110,6 @@ public class TransactionDatabase
     public async Task<int> DeleteTransactionAsync(Transaction transaction)
     {
         await Init();
-        return await database.DeleteAsync(transaction);
+        return await database!.DeleteAsync(transaction);
     }
 }
