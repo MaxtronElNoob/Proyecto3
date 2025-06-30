@@ -4,16 +4,20 @@ using System.ComponentModel;
 
 namespace MauiApp2_Tips;
 
-public partial class BillViewModel : ObservableObject
+public partial class TransactionViewModel : ObservableObject
 {
 	[ObservableProperty]
 	private List<Transaccion>? listaTransacciones;
 
-	public double Balance => ListaTransacciones?.Sum(t => t.Tipo == TipoTransaccion.Ingreso ? t.Monto : -t.Monto) ?? 0;
 	public double Ingresos => ListaTransacciones?.Sum(t => t.Tipo == TipoTransaccion.Ingreso ? t.Monto : 0) ?? 0;
 	public double Egresos => ListaTransacciones?.Sum(t => t.Tipo == TipoTransaccion.Retiro ? t.Monto : 0) ?? 0;
+	public double Balance => Ingresos - Egresos;
+	public string Nombre;
+	public string Apellido;
 
 
+	private
+	
 
 	// public int tipAmount => (int)Math.Round(subtotal * Bill.TipPercent);
 	// public int perPersonAmount => subtotal + tipAmount;

@@ -4,19 +4,14 @@ namespace Proyecto3_pago;
 
 public class DatabaseService
 {
-    private readonly SQLiteConnection _connection;
-    public DatabaseService(string databasePath = "testdb.db")
-    {
-        string fullPath = DatabasePathHelper.GetDatabasePath(databasePath);
-        _connection = new SQLiteConnection(fullPath);
-        _connection.CreateTable<Customer>();
-    }
-}
+    SQLiteAsyncConnection database;
 
-// Define the Customer class if it does not exist elsewhere
-public class Customer
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public required string Name { get; set; }
+    async Task Init()
+    {
+        if (database is not null)
+            return;
+
+        database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+        var result = await database.CreateTableAsync<TodoItem>();
+    }
 }
