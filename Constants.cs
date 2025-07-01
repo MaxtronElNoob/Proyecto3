@@ -1,3 +1,4 @@
+namespace Proyecto3_pago;
 public static class Constants
 {
     public const string DatabaseFilename = "testdb.db";
@@ -9,6 +10,5 @@ public static class Constants
         SQLite.SQLiteOpenFlags.Create |
         // enable multi-threaded database access
         SQLite.SQLiteOpenFlags.SharedCache;
-
-    public static string DatabasePath => Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
+    public static string DatabasePath => Path.Combine(AppContext.BaseDirectory, "DataBases", "testdb.db");
 }
