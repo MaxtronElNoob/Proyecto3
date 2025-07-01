@@ -13,7 +13,7 @@
 // 	private Usuario? usuario;
 // 	public double Balance => usuario?.Ingresos - usuario?.Egresos ?? 0;
 // 	private readonly TransactionDatabase _database;
-	
+
 // 	public TransactionViewModel(TransactionDatabase database) {
 // 		_database = database;
 // 		listaTransacciones = new List<Transaccion>();
@@ -91,6 +91,8 @@
 // 	}
 // }
 
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Proyecto3_pago.DataBases.Models;
 using Proyecto3_pago.DataBases; // Add this line if AppDbContext is in this namespace
 using System.ComponentModel;
@@ -99,13 +101,13 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Proyecto3_pago.ViewModels;
 
-public partial class TransaccionesViewModel : INotifyPropertyChanged
+public partial class TransaccionesViewModel : ObservableObject
 {
-    private readonly TransactionDatabase database;
+    private TransactionDatabase database;
 
-    public TransaccionesViewModel()
+    public TransaccionesViewModel(TransactionDatabase db)
     {
-        database = new TransactionDatabase();
+        database = db;
         NuevaTransaccion = new Transaction();
         InitializeAsync();
     }
@@ -131,21 +133,10 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
         try
         {
             await database.SaveTransactionAsync(NuevaTransaccion);
-
-            if (NuevaTransaccion.IsEarning)
-            {
-                user.Earnings += NuevaTransaccion.Amount;
-            }
-            else
-            {
-                user.Spending += NuevaTransaccion.Amount;
-            }
-            
-            await database.SaveUserAsync(user);
             // Limpiar formulario o notificar éxito
             NuevaTransaccion = new Transaction();
             OnPropertyChanged(nameof(NuevaTransaccion));
-            await Shell.Current.GoToAsync(nameof(MainPage));
+            await Shell.Current.GoToAsync("///MainPage");
         }
         catch (Exception ex)
         {
@@ -156,7 +147,8 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
     protected void OnPropertyChanged(string nombre) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nombre));
 
     [RelayCommand]
-	private async Task GoToAddTransaction() {
-		await Shell.Current.GoToAsync(nameof(AddTransaction));
-	}
+    private async Task GoToAddTransaction()
+    {
+        await Shell.Current.GoToAsync(nameof(AddTransaction));
+    }
 }

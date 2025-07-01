@@ -5,9 +5,10 @@ using Proyecto3_pago.DataBases.Models;
 
 namespace Proyecto3_pago.DataBases;
 
-public class TransactionDatabase {
-  
-    private readonly SQLiteAsyncConnection database;
+public class TransactionDatabase
+{
+
+    private SQLiteAsyncConnection database;
     public TransactionDatabase()
     {
         if (database is not null)
@@ -25,7 +26,8 @@ public class TransactionDatabase {
         database = new SQLiteAsyncConnection(Constants.DatabasePath);
     }
 
-    async Task Init() {
+    async Task Init()
+    {
         await database.CreateTableAsync<User>();
         await database.CreateTableAsync<Transaction>();
     }
