@@ -14,8 +14,8 @@ public class TransactionDatabase
             return;
 
         database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-        var result = await database.CreateTableAsync<User>();
-        var result2 = await database.CreateTableAsync<Transaction>();
+        await database.CreateTableAsync<User>();
+        await database.CreateTableAsync<Transaction>();
     }
 
     public async Task<List<User>> GetUsersAsync()

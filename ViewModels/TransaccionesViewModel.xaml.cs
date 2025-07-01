@@ -107,8 +107,19 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
     {
         database = new TransactionDatabase();
         NuevaTransaccion = new Transaction();
+        InitializeAsync();
     }
 
+    private async void InitializeAsync()
+    {
+        user = await database.GetUserAsync(1);
+        if (user == null)
+        {
+            user = new User { Name = "Alonso Herrera", Earnings = 0, Spending = 0 };
+            await database.SaveUserAsync(user);
+        }
+    }
+    public User user;
     public Transaction NuevaTransaccion { get; set; }
 
     public Command GuardarTransaccionCommand => new Command(async () => await GuardarTransaccion());
@@ -121,21 +132,16 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
         {
             await database.SaveTransactionAsync(NuevaTransaccion);
 
-            User user = await database.GetUserAsync(0);
-
-            if (user != null)
+            if (NuevaTransaccion.IsEarning)
             {
-                if (NuevaTransaccion.IsEarning)
-                {
-                    user.Earnings += NuevaTransaccion.Amount;
-                }
-                else
-                {
-                    user.Spending += NuevaTransaccion.Amount;
-                }
-                await database.SaveUserAsync(user);
+                user.Earnings += NuevaTransaccion.Amount;
             }
-
+            else
+            {
+                user.Spending += NuevaTransaccion.Amount;
+            }
+            
+            await database.SaveUserAsync(user);
             // Limpiar formulario o notificar éxito
             NuevaTransaccion = new Transaction();
             OnPropertyChanged(nameof(NuevaTransaccion));
@@ -143,8 +149,7 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            // Manejo de errores
-            Debug.WriteLine($"Error al guardar transacción: {ex.Message}");
+            Debug.WriteLine($"Error al guardar transacción: {ex.Message}"); // Manejo de errores
         }
     }
 

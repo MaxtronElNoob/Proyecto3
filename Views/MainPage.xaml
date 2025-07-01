@@ -5,13 +5,13 @@
 
     <StackLayout Padding="20">
         <Label Text="Balance Total:" FontAttributes="Bold"/>
-        <Label Text="{Binding Balance, StringFormat='${0:F2}'}"/>
+        <Label Text="{Binding user.Balance}"/>
 
         <Label Text="Total Ingresos:" />
-        <Label Text="{Binding TotalIngresos, StringFormat='${0:F2}'}"/>
+        <Label Text="{Binding user.Earnings}"/>
 
         <Label Text="Total Gastos:" />
-        <Label Text="{Binding TotalGastos, StringFormat='${0:F2}'}"/>
+        <Label Text="{Binding user.Spending}"/>
 
         <Button Text="Agregar Transacción" Command="{Binding GoToAddTransactionCommand}" />
 
