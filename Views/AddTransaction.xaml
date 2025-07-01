@@ -16,6 +16,8 @@
 
             <CheckBox/>
             <Label Text="¿Es ingreso?"/>
+
+        <Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -112,7 +112,7 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
 
     private async void InitializeAsync()
     {
-        user = await database.GetUserAsync(1);
+        user = await database.GetUserAsync(0);
         if (user == null)
         {
             user = new User { Name = "Alonso Herrera", Earnings = 0, Spending = 0 };
@@ -122,10 +122,10 @@ public partial class TransaccionesViewModel : INotifyPropertyChanged
     public User user;
     public Transaction NuevaTransaccion { get; set; }
 
-    public Command GuardarTransaccionCommand => new Command(async () => await GuardarTransaccion());
-
+    // public Command GuardarTransaccionCommand => new Command(async () => await GuardarTransaccion());
     public event PropertyChangedEventHandler PropertyChanged;
 
+    [RelayCommand]
     private async Task GuardarTransaccion()
     {
         try

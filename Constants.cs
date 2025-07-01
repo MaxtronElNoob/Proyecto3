@@ -1,3 +1,6 @@
+using System.IO;
+using Microsoft.Maui.Storage;
+
 namespace Proyecto3_pago;
 public static class Constants
 {
@@ -10,5 +13,14 @@ public static class Constants
         SQLite.SQLiteOpenFlags.Create |
         // enable multi-threaded database access
         SQLite.SQLiteOpenFlags.SharedCache;
-    public static string DatabasePath => Path.Combine(AppContext.BaseDirectory, "DataBases", "testdb.db");
+
+    // Asegura que la carpeta exista antes de devolver la ruta
+    public static string DatabasePath {
+        get {
+            var dbDir = Path.Combine(FileSystem.AppDataDirectory);
+            if (!Directory.Exists(dbDir))
+                Directory.CreateDirectory(dbDir);
+            return Path.Combine(dbDir, DatabaseFilename);
+        }
+    }
 }
