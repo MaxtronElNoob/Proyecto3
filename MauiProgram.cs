@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Proyecto3_pago.DataBases;
+using Proyecto3_pago.ViewModels;
 
 namespace Proyecto3_pago;
 
@@ -19,6 +19,10 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
+        builder.Services.AddSingleton<TransaccionesViewModel>();
+        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<AddTransaction>();
+        builder.Services.AddSingleton<TransactionDatabase>();
 
         builder.Services.AddSingleton<TransactionDatabase>();
         return builder.Build();

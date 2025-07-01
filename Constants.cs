@@ -1,7 +1,7 @@
 namespace Proyecto3_pago;
 public static class Constants
 {
-    public const string DatabaseFilename = "/DataBases/testdb.db";
+    public const string DatabaseFilename = "testdb.db";
 
     public const SQLite.SQLiteOpenFlags Flags =
         // open the database in read/write mode

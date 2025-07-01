@@ -5,7 +5,7 @@ using Proyecto3_pago.DataBases.Models;
 namespace Proyecto3_pago.DataBases;
 
 public class TransactionDatabase
-{
+  
     SQLiteAsyncConnection database;
 
     async Task Init()
