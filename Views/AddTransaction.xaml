@@ -14,7 +14,7 @@
             <Label Text="Fecha"/>
             <DatePicker Date="{Binding NuevaTransaccion.Date}" FontSize="16" Format="d"/>
 
-            <CheckBox/>
+            <CheckBox IsChecked="{Binding NuevaTransaccion.IsEarning}"/>
             <Label Text="¿Es ingreso?"/>
 
             <Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
