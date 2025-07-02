@@ -1,10 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Proyecto3_pago.AddTransaction">
+	x:Class="Proyecto3_pago.AddTransaction"
+	>
 
     <Grid>
-	<Frame Background="#FFFFFFFF" Padding="3" CornerRadius="15" HeightRequest="450" WidthRequest="350">
+        <Ellipse Fill="#6200EE"
+                 WidthRequest="600"
+                 HeightRequest="500"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Start"
+                 Margin="-20,-300,0,0"
+                 ZIndex="0" />
+	
+	<Label Text="Nueva transaccion" FontSize="30" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,90,0,0"/>
+	<Frame Background="#FFFFFFFF" Padding="3" CornerRadius="15" HeightRequest="450" WidthRequest="350" HasShadow="True">
 		<VerticalStackLayout Padding="0,30,0,0" Spacing="25">
 			<VerticalStackLayout Padding="10,0" Spacing="1">
 			    <Label Text="Glosa" FontSize="16"/>
@@ -14,10 +24,10 @@
 			</VerticalStackLayout>
 
 			<VerticalStackLayout Padding="10,0" Spacing="1">
-			    <Label Text="Cantidad" FontSize="16"/>
-				    <Frame BorderColor="Purple" CornerRadius="10" Padding="0" HasShadow="False" HeightRequest="45">
-					    <Entry Text="{Binding NuevaTransaccion.Amount}" FontSize="16" Keyboard="Numeric" TextColor="Black" WidthRequest="300"/>
-					</Frame>
+				<Label Text="Cantidad" FontSize="16"/>
+				<Frame BorderColor="Purple" CornerRadius="10" Padding="0" HasShadow="False" HeightRequest="45">
+				    <Entry Text="{Binding NuevaTransaccion.Amount}" FontSize="16" Keyboard="Numeric" TextColor="Black" WidthRequest="300"/>
+				</Frame>
 			</VerticalStackLayout>
 
 			<VerticalStackLayout Padding="10,0" Spacing="1">
@@ -33,8 +43,8 @@
 			</HorizontalStackLayout>
 
 			<HorizontalStackLayout Spacing ="10" HorizontalOptions="Center">
-			    <Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
-			    <Button Text="Cancelar" Command="{Binding GoToAddTransaction}"/>
+				<Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
+				<Button Text="Cancelar" Command="{Binding GoToAddTransactionCommand}" BackgroundColor="Red"/>
 			</HorizontalStackLayout>
 		</VerticalStackLayout>
 	</Frame>

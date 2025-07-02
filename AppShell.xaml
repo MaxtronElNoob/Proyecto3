@@ -12,7 +12,6 @@
         Route="MainPage" />
 
     <ShellContent
-        Title="Agregar"
         ContentTemplate="{DataTemplate local:AddTransaction}"
         Route="AddTransaction" />
 

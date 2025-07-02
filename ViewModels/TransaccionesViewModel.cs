@@ -41,6 +41,7 @@ public partial class TransaccionesViewModel : ObservableObject
     [RelayCommand]
     private async Task GoToAddTransaction()
     {
+        NuevaTransaccion = new Transaction();
         await Shell.Current.GoToAsync("///MainPage");
     }
 }
