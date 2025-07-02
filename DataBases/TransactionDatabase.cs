@@ -14,10 +14,6 @@ public class TransactionDatabase
         if (database is not null)
             return;
 
-        // SOLO PARA DESARROLLO: Elimina la base de datos anterior si existe
-        // if (File.Exists(Constants.DatabasePath))
-        //     File.Delete(Constants.DatabasePath);
-
         // Asegura que la carpeta exista
         var dbDir = Path.GetDirectoryName(Constants.DatabasePath);
         if (!Directory.Exists(dbDir))
