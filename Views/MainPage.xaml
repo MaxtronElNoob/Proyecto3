@@ -1,61 +1,111 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto3_pago.MainPage">
-    <AbsoluteLayout>
-        <Ellipse Fill="#6200EE" WidthRequest="500" HeightRequest="500" 
-        HorizontalOptions="Center" VerticalOptions="Start"
-        Margin="-100,-350,0,0" /> 
-        <StackLayout Padding="20">
-            <Label Text="Nombre:" FontAttributes="Bold"/>
-            <Label Text="{Binding Name}"/>
+    <Grid>
+        <!-- Fondo decorativo -->
+        <Ellipse Fill="#6200EE"
+                 WidthRequest="600"
+                 HeightRequest="500"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Start"
+                 Margin="-20,-300,0,0"
+                 ZIndex="0" />
 
-            <Label Text="Balance Total:" FontAttributes="Bold"/>
-            <Label Text="{Binding Balance}"/>
+        <!-- Sección superior fija -->
+        <VerticalStackLayout Padding="20,10,20,0"
+                             Spacing="10"
+                             ZIndex="1">
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Bienvenido! " FontAttributes="Bold" FontSize="20" TextColor="White"/>
+                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="20" TextColor="White"/>
+            </HorizontalStackLayout>
+            <Border StrokeThickness="0" BackgroundColor="White" Padding="20" StrokeShape="RoundRectangle 20" Margin="10">
+                <Border.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Offset="0,10"
+                        Radius="20"
+                        Opacity="0.3" />
+                </Border.Shadow>
+                
+                    <VerticalStackLayout Spacing="5">
 
-            <Label Text="Total Ingresos:" />
-            <Label Text="{Binding Earnings}"/>
-
-            <Label Text="Total Gastos:" />
-            <Label Text="{Binding Spending}"/>
-
-            <Button Text="Agregar Transacción" Command="{Binding GoToAddTransactionCommand}" />
-            
-            <Label Text="Transacciones"/>
-            <CollectionView ItemsSource="{Binding ListaTransacciones}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Orientation="Horizontal" Margin="5">
+                        <Label Text="Balance Total:" FontAttributes="Bold"/>
+                        <Label Text="{Binding Balance}" FontAttributes="Bold" FontSize="30"/>
+                        <HorizontalStackLayout Spacing="30">
                             <VerticalStackLayout>
-                                <Label Text="{Binding Detail}" FontAttributes="Bold"/>
-                                <Label Text="{Binding Date, StringFormat='{0:dd-MM-yyyy}'}" WidthRequest="80"/>
+                                <Label Text="Total Ingresos:" />
+                                <Label Text="{Binding Earnings}" FontAttributes="Bold" FontSize="20"/>
                             </VerticalStackLayout>
-                            <Label x:Name="SignLabel" WidthRequest="20">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
-                                        <Setter Property="Text" Value="+"/>
-                                        <Setter Property="TextColor" Value="Green"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
-                                        <Setter Property="Text" Value="-"/>
-                                        <Setter Property="TextColor" Value="Red"/>
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                            <Label Text="{Binding Amount, StringFormat='${0:F2}'}" WidthRequest="80">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
-                                        <Setter Property="TextColor" Value="Green"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
-                                        <Setter Property="TextColor" Value="Red"/>
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
-    </AbsoluteLayout>
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="Total Gastos:"/>
+                                <Label Text="{Binding Spending}" FontAttributes="Bold" FontSize="20"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Button Text="Agregar Transacción"
+                                Command="{Binding GoToAddTransactionCommand}"
+                                BackgroundColor="#6200EE"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="10"/>
+                    </VerticalStackLayout>
+                
+            </Border>
+            <!-- Título fijo -->
+            <Label Text="Transacciones"
+                HorizontalOptions="Center" FontSize="18" FontAttributes="Bold" TextColor="Gray"/>
+        </VerticalStackLayout>
+
+        <!-- Scroll solo para la lista -->
+        <ScrollView Grid.Row="1" Margin="20,300,10,20" ZIndex="2">
+            
+            <VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding ListaTransacciones}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10,5">
+                                <Label Text="{Binding Detail}" FontSize="17" FontAttributes="Bold" TextColor="Black"/>
+                                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,5,0,0">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Date, StringFormat='{0:dd-MM-yyyy}'}"
+                                           FontSize="13"
+                                           TextColor="Gray"
+                                           WidthRequest="80"/>
+                                    <Label Grid.Column="1"
+                                           FontSize="14"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
+                                                <Setter Property="Text" Value="Ingreso"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
+                                                <Setter Property="Text" Value="Gasto"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Grid.Column="2"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="End">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
+                                                <Setter Property="TextColor" Value="Green"/>
+                                                <Setter Property="Text" Value="{Binding Amount, StringFormat='+ ${0:N0}'}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
+                                                <Setter Property="TextColor" Value="Red"/>
+                                                <Setter Property="Text" Value="{Binding Amount, StringFormat='- ${0:N0}'}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Grid>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+           
+        </ScrollView>
+    </Grid>
 </ContentPage>
