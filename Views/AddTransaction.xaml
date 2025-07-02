@@ -3,23 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto3_pago.AddTransaction">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
-            <Label Text="Glosa"/>
-            <Entry Text="{Binding NuevaTransaccion.Detail}" FontSize="16" Keyboard="Text" TextColor="Black" />
+    <Grid>
+	<Frame Background="#FFFFFFFF" Padding="3" CornerRadius="15" HeightRequest="450" WidthRequest="350">
+		<VerticalStackLayout Padding="0,30,0,0" Spacing="25">
+			<VerticalStackLayout Padding="10,0" Spacing="1">
+			    <Label Text="Glosa" FontSize="16"/>
+				<Frame BorderColor="Purple" CornerRadius="10" Padding="0" HasShadow="False" HeightRequest="45">
+					<Entry Text="{Binding NuevaTransaccion.Detail}" FontSize="16" Keyboard="Text" TextColor="Black" WidthRequest="300"/>
+				</Frame>
+			</VerticalStackLayout>
 
-            <Label Text="Cantidad"/>
-            <Entry Text="{Binding NuevaTransaccion.Amount}" FontSize="16" Keyboard="Numeric" TextColor="Black" />
+			<VerticalStackLayout Padding="10,0" Spacing="1">
+			    <Label Text="Cantidad" FontSize="16"/>
+				    <Frame BorderColor="Purple" CornerRadius="10" Padding="0" HasShadow="False" HeightRequest="45">
+					    <Entry Text="{Binding NuevaTransaccion.Amount}" FontSize="16" Keyboard="Numeric" TextColor="Black" WidthRequest="300"/>
+					</Frame>
+			</VerticalStackLayout>
 
-            <Label Text="Fecha"/>
-            <DatePicker Date="{Binding NuevaTransaccion.Date}" FontSize="16" Format="d"/>
+			<VerticalStackLayout Padding="10,0" Spacing="1">
+			    <Label Text="Fecha" FontSize="16"/>
+						    <Frame BorderColor="Purple" CornerRadius="10" Padding="0" HasShadow="False" HeightRequest="45">
+			    <DatePicker Date="{Binding NuevaTransaccion.Date}" FontSize="16" Format="d" WidthRequest="300"/>
+					</Frame>
+			</VerticalStackLayout>
 
-            <CheckBox IsChecked="{Binding NuevaTransaccion.IsEarning}"/>
-            <Label Text="¿Es ingreso?"/>
+			<HorizontalStackLayout Spacing="10">
+			    <CheckBox IsChecked="{Binding NuevaTransaccion.IsEarning}" VerticalOptions="Center"/>
+			    <Label Text="¿Es ingreso?" FontSize="16" VerticalOptions="Center"/>
+			</HorizontalStackLayout>
 
-            <Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
-            <!-- <Button Text="Cancelar" Command="{Binding GoToAddTransaction}"/> -->
-        </VerticalStackLayout>
-    </ScrollView>
-
+			<HorizontalStackLayout Spacing ="10" HorizontalOptions="Center">
+			    <Button Text="Agregar" Command="{Binding GuardarTransaccionCommand}" />
+			    <Button Text="Cancelar" Command="{Binding GoToAddTransaction}"/>
+			</HorizontalStackLayout>
+		</VerticalStackLayout>
+	</Frame>
+    </Grid>
 </ContentPage>
