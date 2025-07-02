@@ -1,6 +1,3 @@
-using System.IO;
-using Microsoft.Maui.Storage;
-
 namespace Proyecto3_pago;
 public static class Constants
 {

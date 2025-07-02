@@ -1,11 +1,10 @@
 using SQLite;
-using System.IO;
-
 using Proyecto3_pago.DataBases.Models;
+using System.Diagnostics;
 
 namespace Proyecto3_pago.DataBases;
 
-public class TransactionDatabase
+public class TransactionDatabase 
 {
 
     private SQLiteAsyncConnection database;
@@ -35,13 +34,20 @@ public class TransactionDatabase
     public async Task<List<User>> GetUsersAsync()
     {
         await Init();
-        return await database!.Table<User>().ToListAsync();
-    }
+        var users = await database!.Table<User>().ToListAsync();
+        // foreach (var user in users)
+        // {
+        //     Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance},earnings: {user.Earnings}, spending: {user.Spending}");
+        // }
+            return await database!.Table<User>().ToListAsync();
+        }
 
     public async Task<User> GetUserAsync(int id)
     {
         await Init();
-        return await database!.Table<User>().Where(i => i.ID == id).FirstOrDefaultAsync();
+        var user = await database!.Table<User>().Where(i => i.ID == id).FirstOrDefaultAsync();
+        // Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance},earnings: {user.Earnings}, spending: {user.Spending}");
+        return user;
     }
 
     public async Task<int> SaveUserAsync(User user)

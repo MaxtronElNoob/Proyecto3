@@ -1,8 +1,8 @@
 using SQLite;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proyecto3_pago.DataBases.Models;
 
+[SQLite.Table("transaction")]
 public class Transaction
 {
     [PrimaryKey, AutoIncrement]
@@ -12,8 +12,7 @@ public class Transaction
     public string Detail { get; set; }
     public DateTime Date { get; set; }
 
-    [ForeignKey("User")]
+    // SQLite-net no soporta claves foráneas con atributos.
+    // Puedes usar convenciones de nombres (UserId) y manejar relaciones manualmente.
     public int UserId { get; set; }
-    [Ignore]
-    public User? User { get; set; }
 }
