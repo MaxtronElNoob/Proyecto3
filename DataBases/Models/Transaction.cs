@@ -2,7 +2,6 @@ using SQLite;
 
 namespace Proyecto3_pago.DataBases.Models;
 
-[SQLite.Table("transaction")]
 public class Transaction
 {
     [PrimaryKey, AutoIncrement]
@@ -12,7 +11,5 @@ public class Transaction
     public string Detail { get; set; }
     public DateTime Date { get; set; } = DateTime.Now;
 
-    // SQLite-net no soporta claves foráneas con atributos.
-    // Puedes usar convenciones de nombres (UserId) y manejar relaciones manualmente.
     public int UserId { get; set; }
 }
