@@ -4,7 +4,6 @@
              x:Class="Proyecto3_pago.AddTransaction"
              BackgroundColor="White">
 
-    <ScrollView>
         <Grid>
             <Ellipse Fill="#6200EE"
                      WidthRequest="800"
@@ -88,5 +87,4 @@
                 </VerticalStackLayout>
             </Frame>
         </Grid>
-    </ScrollView>
 </ContentPage>
