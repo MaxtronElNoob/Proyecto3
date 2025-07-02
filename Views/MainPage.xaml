@@ -20,15 +20,38 @@
             <Label Text="{Binding Spending}"/>
 
             <Button Text="Agregar Transacción" Command="{Binding GoToAddTransactionCommand}" />
-
+            
+            <Label Text="Transacciones"/>
             <CollectionView ItemsSource="{Binding ListaTransacciones}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal" Margin="5">
-                            <Label Text="{Binding Date, StringFormat='{0:dd/MM}'}" WidthRequest="60"/>
-                            <Label Text="{Binding IsEarning}" WidthRequest="70"/>
-                            <Label Text="{Binding Amount, StringFormat='${0:F2}'}" WidthRequest="80"/>
-                            <Label Text="{Binding Detail}"/>
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Detail}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Date, StringFormat='{0:dd-MM-yyyy}'}" WidthRequest="80"/>
+                            </VerticalStackLayout>
+                            <Label x:Name="SignLabel" WidthRequest="20">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
+                                        <Setter Property="Text" Value="+"/>
+                                        <Setter Property="TextColor" Value="Green"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
+                                        <Setter Property="Text" Value="-"/>
+                                        <Setter Property="TextColor" Value="Red"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label Text="{Binding Amount, StringFormat='${0:F2}'}" WidthRequest="80">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="True">
+                                        <Setter Property="TextColor" Value="Green"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsEarning}" Value="False">
+                                        <Setter Property="TextColor" Value="Red"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
