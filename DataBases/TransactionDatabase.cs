@@ -4,10 +4,11 @@ using System.Diagnostics;
 
 namespace Proyecto3_pago.DataBases;
 
-public class TransactionDatabase 
+public class TransactionDatabase
 {
 
     private SQLiteAsyncConnection database;
+    private bool initialized;
     public TransactionDatabase()
     {
         if (database is not null)
@@ -27,26 +28,52 @@ public class TransactionDatabase
 
     async Task Init()
     {
+        if (initialized) return;
         await database.CreateTableAsync<User>();
         await database.CreateTableAsync<Transaction>();
+        // Crear usuario por defecto si no existe
+        var count = await database.Table<User>().CountAsync();
+        if (count == 0)
+        {
+            var defaultUser = new User
+            {
+                Name = "Alonso Herrera",
+                Earnings = 0.0,
+                Spending = 0.0
+            };
+
+            await database.InsertAsync(defaultUser);
+            Debug.WriteLine("✅ Usuario por defecto creado");
+        }
+        initialized = true;
     }
 
     public async Task<List<User>> GetUsersAsync()
     {
         await Init();
         var users = await database!.Table<User>().ToListAsync();
-        // foreach (var user in users)
-        // {
-        //     Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance},earnings: {user.Earnings}, spending: {user.Spending}");
-        // }
-            return await database!.Table<User>().ToListAsync();
+        foreach (var user in users)
+        {
+            Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance},earnings: {user.Earnings}, spending: {user.Spending}");
         }
+        return await database!.Table<User>().ToListAsync();
+    }
 
     public async Task<User> GetUserAsync(int id)
     {
         await Init();
         var user = await database!.Table<User>().Where(i => i.ID == id).FirstOrDefaultAsync();
-        // Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance},earnings: {user.Earnings}, spending: {user.Spending}");
+
+
+        if (user is not null)
+        {
+            Debug.WriteLine($"ID: {user.ID}, name: {user.Name}, balance: {user.Balance}, earnings: {user.Earnings}, spending: {user.Spending}");
+        }
+        else
+        {
+            Debug.WriteLine($"⚠️ No se encontró un usuario con ID {id}");
+        }
+
         return user;
     }
 

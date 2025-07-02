@@ -11,7 +11,12 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
         database = transactionDatabase;
-        _ = viewModel.LoadUserAsync(); // Esto lo ejecuta al cargar la página
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is UserInfoViewModel vm)
+            await vm.LoadUserAsync();
     }
 }
 

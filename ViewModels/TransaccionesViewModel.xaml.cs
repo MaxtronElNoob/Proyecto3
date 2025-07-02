@@ -9,20 +9,13 @@ namespace Proyecto3_pago.ViewModels;
 public partial class TransaccionesViewModel : ObservableObject
 {
     private TransactionDatabase database;
-    private Transaction nuevaTransaccion = new Transaction();
-    public Transaction NuevaTransaccion
-    {
-        get => nuevaTransaccion;
-        set
-        {
-            SetProperty(ref nuevaTransaccion, value);
-        }
-    }
+
+    [ObservableProperty]
+    private Transaction nuevaTransaccion = new();
 
     public TransaccionesViewModel(TransactionDatabase db)
     {
         database = db;
-        NuevaTransaccion = new Transaction();
     }
 
 
@@ -31,12 +24,13 @@ public partial class TransaccionesViewModel : ObservableObject
     {
         try
         {
+            Debug.WriteLine($"Guardando transaccion..."); // Manejo de errores
+            NuevaTransaccion.UserId = 1;
             await database.SaveTransactionAsync(NuevaTransaccion);
             // Limpiar formulario o notificar éxito
             NuevaTransaccion = new Transaction();
             OnPropertyChanged(nameof(NuevaTransaccion));
             await GoToAddTransaction();
-            
         }
         catch (Exception ex)
         {

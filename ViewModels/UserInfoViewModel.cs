@@ -1,100 +1,9 @@
-// using CommunityToolkit.Mvvm.ComponentModel;
-// using CommunityToolkit.Mvvm.Input;
-// using Proyecto3_pago.Models;
-// using Proyecto3_pago.DataBases;
-// using Proyecto3_pago.DataBases.Models;
-
-// namespace Proyecto3_pago.ViewModels;
-
-// public partial class TransactionViewModel : ObservableObject {
-// 	[ObservableProperty]
-// 	private List<Transaccion> listaTransacciones;
-// 	public Transaccion new_transaction;
-// 	private Usuario? usuario;
-// 	public double Balance => usuario?.Ingresos - usuario?.Egresos ?? 0;
-// 	private readonly TransactionDatabase _database;
-
-// 	public TransactionViewModel(TransactionDatabase database) {
-// 		_database = database;
-// 		listaTransacciones = new List<Transaccion>();
-// 		new_transaction = new Transaccion();
-// 		InitializeAsync();
-// 	}
-
-// 	private async void InitializeAsync() {
-// 		User user = await _database.GetUserAsync(0);
-// 		if (user != null) {
-// 			usuario = new Usuario {
-// 				Id = user.ID,
-// 				Nombre = user.Name,
-// 				Ingresos = user.Earnings,
-// 				Egresos = user.Spending
-// 			};
-// 		}
-// 		else {
-// 			usuario = new Usuario {
-// 				Id = 0,
-// 				Nombre = "Alonso Herrera",
-// 				Ingresos = 0,
-// 				Egresos = 0
-// 			};
-// 		}
-// 		List<Transaction> transactions = await _database.GetTransactionsAsync();
-// 		ListaTransacciones = transactions.Select(t => new Transaccion
-// 		{
-// 			Monto = t.Amount,
-// 			Glosa = t.Detail,
-// 			Fecha = t.Date,
-// 			es_ingreso = t.IsEarning
-// 		}).ToList();
-// 		OnPropertyChanged(nameof(Balance));
-// 	}
-
-// 	[RelayCommand]
-// 	private async Task UploadTransaction() {
-// 		ListaTransacciones.Add(new_transaction);
-
-// 		if (usuario != null)
-// 		{
-// 			if (new_transaction.es_ingreso) {
-// 				usuario.Ingresos += new_transaction.Monto;
-// 			}
-// 			else {
-// 				usuario.Egresos += new_transaction.Monto;
-// 			}
-// 		}
-
-// 		//Aqui deberia haber un async para subirlo a la base de datos el new_transaction
-// 		var dbTransaction = new DataBases.Models.Transaction
-// 		{
-// 			// Map properties from new_transaction to dbTransaction
-// 			Amount = (int)new_transaction.Monto,
-// 			Detail = new_transaction.Glosa ?? string.Empty,
-// 			Date = new_transaction.Fecha,
-// 			IsEarning = new_transaction.es_ingreso
-// 			// Add other property mappings as needed
-// 		};
-// 		await _database.SaveTransactionAsync(dbTransaction);
-
-// 		//Reset de new_transaction
-// 		new_transaction.es_ingreso = false;
-// 		new_transaction.Fecha = DateTime.Today;
-// 		new_transaction.Glosa = "";
-// 		new_transaction.Monto = 0;
-
-// 		await Shell.Current.GoToAsync(nameof(MainPage));
-// 	}
-
-// 	[RelayCommand]
-// 	private async Task GoToAddTransaction() {
-// 		await Shell.Current.GoToAsync(nameof(AddTransaction));
-// 	}
-// }
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Proyecto3_pago.DataBases.Models;
 using Proyecto3_pago.DataBases; // Add this line if AppDbContext is in this namespace
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Proyecto3_pago.ViewModels;
 
@@ -103,41 +12,52 @@ public partial class UserInfoViewModel : ObservableObject
     private readonly TransactionDatabase _database;
 
     [ObservableProperty]
-    private List<Transaction>? listaTransacciones;
+    private ObservableCollection<Transaction> listaTransacciones = new();
 
     [ObservableProperty]
-    private string name = string.Empty;
+    private string? name;
 
     [ObservableProperty]
-    private double earnings = 0;
+    private double? earnings;
 
     [ObservableProperty]
-    private double spending = 0;
+    private double? spending;
 
-    public double Balance => Earnings - Spending;
-    
+    public double? Balance => Earnings - Spending;
+
 
     public UserInfoViewModel(TransactionDatabase database)
     {
         _database = database;
     }
 
+    private void OnEarningsChanged(double value)
+    {
+        OnPropertyChanged(nameof(Balance));
+    }
+
+    private void OnSpendingChanged(double value)
+    {
+        OnPropertyChanged(nameof(Balance));
+    }
+
     public async Task LoadUserAsync()
     {
-        await _database.GetUsersAsync();
-        User user = await _database.GetUserAsync(0);
+        var user = await _database.GetUserAsync(1);
         if (user != null)
         {
             Name = user.Name;         // Esto dispara OnPropertyChanged y actualiza la UI
             Earnings = user.Earnings;
             Spending = user.Spending;
+            OnPropertyChanged(nameof(Balance));
         }
-        else
+        var transactions = await _database.GetTransactionsByUserAsync(1);
+        foreach (var t in transactions)
         {
-            User user1 = new User { Name = "Alonso", Earnings = 0, Spending = 0 };
-            await _database.SaveUserAsync(user1);
+            Debug.WriteLine($"Transaccion: {t.Amount}, {t.Date}, {t.Detail}");
+
         }
-        ListaTransacciones = await _database.GetTransactionsAsync();
+        ListaTransacciones = new ObservableCollection<Transaction>(transactions);
     }
 
     [RelayCommand]
@@ -146,3 +66,4 @@ public partial class UserInfoViewModel : ObservableObject
         await Shell.Current.GoToAsync(nameof(AddTransaction));
     }
 }
+
