@@ -10,7 +10,7 @@ public class Transaction
     public double Amount { get; set; }
     public bool IsEarning { get; set; }
     public string Detail { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
 
     // SQLite-net no soporta claves foráneas con atributos.
     // Puedes usar convenciones de nombres (UserId) y manejar relaciones manualmente.
