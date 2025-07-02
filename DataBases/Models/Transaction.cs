@@ -9,7 +9,7 @@ public class Transaction
     public double Amount { get; set; }
     public bool IsEarning { get; set; }
     public string Detail { get; set; }
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
 
     public int UserId { get; set; }
 }
