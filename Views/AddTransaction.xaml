@@ -6,7 +6,6 @@
 
     <ScrollView>
         <Grid>
-            <!-- Fondo decorativo -->
             <Ellipse Fill="#6200EE"
                      WidthRequest="800"
                      HeightRequest="500"
@@ -15,24 +14,21 @@
                      Margin="0,-300,0,0"
                      ZIndex="0" />
 
-            <!-- Título -->
             <Label Text="Nueva transaccion"
                    FontSize="30"
                    FontAttributes="Bold"
                    TextColor="White"
                    HorizontalOptions="Center"
-                   Margin="0,90,0,0" />
+                   Margin="0,50,0,0" />
 
-            <!-- Formulario -->
             <Frame BackgroundColor="White"
-                   Margin="20,200,20,40"
+                   Margin="20,130,20,40"
                    CornerRadius="15"
                    HasShadow="True"
                    VerticalOptions="Start">
                 
                 <VerticalStackLayout Padding="20,30" Spacing="20">
                     
-                    <!-- Glosa -->
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Glosa" FontSize="16"/>
                         <Frame BorderColor="Purple" CornerRadius="10" Padding="10,5" HasShadow="False">
@@ -45,7 +41,6 @@
                         </Frame>
                     </VerticalStackLayout>
 
-                    <!-- Cantidad -->
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Cantidad" FontSize="16"/>
                         <Frame BorderColor="Purple" CornerRadius="10" Padding="10,5" HasShadow="False">
@@ -58,7 +53,6 @@
                         </Frame>
                     </VerticalStackLayout>
 
-                    <!-- Fecha -->
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Fecha" FontSize="16"/>
                         <Frame BorderColor="Purple" CornerRadius="10" Padding="10,5" HasShadow="False">
@@ -70,13 +64,11 @@
                         </Frame>
                     </VerticalStackLayout>
 
-                    <!-- CheckBox -->
                     <HorizontalStackLayout Spacing="10">
                         <CheckBox IsChecked="{Binding NuevaTransaccion.IsEarning}" VerticalOptions="Center"/>
                         <Label Text="¿Es ingreso?" FontSize="16" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <!-- Botones -->
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
                         <Button Text="Agregar"
                                 Command="{Binding GuardarTransaccionCommand}"
