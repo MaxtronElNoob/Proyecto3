@@ -2,33 +2,37 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto3_pago.MainPage">
+    <AbsoluteLayout>
+        <Ellipse Fill="#6200EE" WidthRequest="500" HeightRequest="500" 
+        HorizontalOptions="Center" VerticalOptions="Start"
+        Margin="-100,-350,0,0" /> 
+        <StackLayout Padding="20">
+            <Label Text="Nombre:" FontAttributes="Bold"/>
+            <Label Text="{Binding Name}"/>
 
-    <StackLayout Padding="20">
-        <Label Text="Nombre:" FontAttributes="Bold"/>
-        <Label Text="{Binding Name}"/>
+            <Label Text="Balance Total:" FontAttributes="Bold"/>
+            <Label Text="{Binding Balance}"/>
 
-        <Label Text="Balance Total:" FontAttributes="Bold"/>
-        <Label Text="{Binding Balance}"/>
+            <Label Text="Total Ingresos:" />
+            <Label Text="{Binding Earnings}"/>
 
-        <Label Text="Total Ingresos:" />
-        <Label Text="{Binding Earnings}"/>
+            <Label Text="Total Gastos:" />
+            <Label Text="{Binding Spending}"/>
 
-        <Label Text="Total Gastos:" />
-        <Label Text="{Binding Spending}"/>
+            <Button Text="Agregar Transacción" Command="{Binding GoToAddTransactionCommand}" />
 
-        <Button Text="Agregar Transacción" Command="{Binding GoToAddTransactionCommand}" />
-
-        <CollectionView ItemsSource="{Binding ListaTransacciones}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Orientation="Horizontal" Margin="5">
-                        <Label Text="{Binding Date, StringFormat='{0:dd/MM}'}" WidthRequest="60"/>
-                        <Label Text="{Binding IsEarning}" WidthRequest="70"/>
-                        <Label Text="{Binding Amount, StringFormat='${0:F2}'}" WidthRequest="80"/>
-                        <Label Text="{Binding Detail}"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+            <CollectionView ItemsSource="{Binding ListaTransacciones}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Margin="5">
+                            <Label Text="{Binding Date, StringFormat='{0:dd/MM}'}" WidthRequest="60"/>
+                            <Label Text="{Binding IsEarning}" WidthRequest="70"/>
+                            <Label Text="{Binding Amount, StringFormat='${0:F2}'}" WidthRequest="80"/>
+                            <Label Text="{Binding Detail}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </AbsoluteLayout>
 </ContentPage>
